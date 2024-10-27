@@ -1,1 +1,1 @@
-# umc-prac
+# UMC - SPRING BOOT 과제
