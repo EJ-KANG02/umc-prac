@@ -1,1 +1,1 @@
-# UMC - SPRING BOOT 과제
+# UMC - spring boot 과제
