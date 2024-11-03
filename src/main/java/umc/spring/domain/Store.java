@@ -22,11 +22,26 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "region_id")
     private Region region;
 
+    private String address;
+
     private String storeName;
+
+    private Float storeScore;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Mission> missionList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + storeId +
+                ", name='" + storeName + '\'' +
+                ", address='" + address + '\'' +
+                ", score=" + storeScore +
+                ", region=" + (region != null ? region.getRegionName() : "N/A") + // region의 이름 출력
+                '}';
+    }
 }
