@@ -31,11 +31,11 @@ public class UserConverter {
         }
 
         return User.builder()
-                .userId(request.getUserId())
-                .region(request.getRegion())
+                //.userId(request.getUserId())
+                //.region(request.getRegion())
                 .userName(request.getUserName())
                 .gender(gender)
-                .birth(request.getBirth())
+                //.birth(request.getBirth())
                 .address(request.getAddress())
                 .userFavFoodList(new ArrayList<>())
                 .reviewList(new ArrayList<>())

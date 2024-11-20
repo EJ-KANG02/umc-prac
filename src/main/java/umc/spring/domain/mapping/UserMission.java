@@ -19,9 +19,6 @@ public class UserMission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userMissionId;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

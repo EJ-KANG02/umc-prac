@@ -2,8 +2,12 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.Gender;
+import umc.spring.domain.enums.Status;
 import umc.spring.domain.mapping.UserFavFood;
 import umc.spring.domain.mapping.UserMission;
 
@@ -13,6 +17,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -36,6 +42,13 @@ public class User extends BaseEntity {
     private Date birth;
 
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ACTIVE'")
+    private Status status;
+
+    @ColumnDefault("0")
+    private Integer point;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserFavFood> userFavFoodList = new ArrayList<>();

@@ -1,13 +1,12 @@
 package umc.spring.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import umc.spring.domain.Region;
-import umc.spring.domain.Review;
-import umc.spring.domain.enums.Gender;
-import umc.spring.domain.mapping.UserFavFood;
-import umc.spring.domain.mapping.UserMission;
+import umc.spring.validation.annotation.ExistCategories;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +14,22 @@ public class UserRequestDTO {
 
     @Getter
     public static class JoinDto{
-        Long    userId;
-        Region  region;
+        //Long    userId;
+        //Region  region;
+
+        @NotBlank
         String  userName;
+
+        @NotNull
         Integer gender;
-        Date    birth;
+        //Date    birth;
+
+        @Size(min = 5, max = 12)
         String  address;
-        List<Long> UserFavFoodIdList;
-        List<Long> reviewIdList;
-        List<Long> MissionIdList;
+
+        @ExistCategories
+        List<Long> userFavFoodIdList;
+        //List<Long> reviewIdList;
+        //List<Long> missionIdList;
     }
 }
