@@ -17,6 +17,9 @@ public class UserRequestDTO {
         //Long    userId;
         //Region  region;
 
+        @NotNull
+        Long userRegionId;
+
         @NotBlank
         String  userName;
 
