@@ -32,6 +32,11 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
+    public void addReview(Review review) {
+        reviewList.add(review);
+        review.setStore(this); // Review의 연관 관계도 함께 설정
+    }
+
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Mission> missionList = new ArrayList<>();
 
