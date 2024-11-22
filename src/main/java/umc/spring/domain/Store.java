@@ -18,10 +18,13 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeId;
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
+
+    protected void setRegion(Region region) {
+        this.region = region;
+    }
 
     private String address;
 

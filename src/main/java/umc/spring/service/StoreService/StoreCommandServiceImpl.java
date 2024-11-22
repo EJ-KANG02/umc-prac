@@ -39,9 +39,7 @@ public class StoreCommandServiceImpl implements StoreCommandService{
                 }).collect(Collectors.toList());
 
 
-        storeList.forEach(store -> store.setRegion(region));
-
-        region.getStoreList().addAll(storeList);
+        storeList.forEach(store -> region.addStore(store));
 
         return region;
     }
