@@ -35,11 +35,9 @@ public class UserConverter {
         }
 
         return User.builder()
-                //.userId(request.getUserId())
-                .region(null)
+                .region(null) //id 예외 처리 후 대입
                 .userName(request.getUserName())
                 .gender(gender)
-                //.birth(request.getBirth())
                 .address(request.getAddress())
                 .userFavFoodList(new ArrayList<>())
                 .reviewList(new ArrayList<>())

@@ -28,10 +28,13 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id") // regionId 필드는 삭제
     private Region region;
+
+    protected void setRegion(Region region) {
+        this.region = region;
+    }
 
     @Column(nullable = false, length = 15)
     private String userName;

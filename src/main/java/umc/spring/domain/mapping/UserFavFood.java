@@ -33,8 +33,5 @@ public class UserFavFood extends BaseEntity {
         user.getUserFavFoodList().add(this);
     }
 
-    public void setFoodCategory(FoodCategory foodCategory){
-        this.foodCategory = foodCategory;
-    }
 }
 

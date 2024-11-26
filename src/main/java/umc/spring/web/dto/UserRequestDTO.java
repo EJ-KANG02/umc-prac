@@ -14,8 +14,6 @@ public class UserRequestDTO {
 
     @Getter
     public static class JoinDto{
-        //Long    userId;
-        //Region  region;
 
         @NotNull
         Long userRegionId;
@@ -32,7 +30,5 @@ public class UserRequestDTO {
 
         @ExistCategories
         List<Long> userFavFoodIdList;
-        //List<Long> reviewIdList;
-        //List<Long> missionIdList;
     }
 }

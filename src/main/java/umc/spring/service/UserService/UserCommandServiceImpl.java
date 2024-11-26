@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.apiPayload.exception.handler.FoodCategoryHandler;
 import umc.spring.apiPayload.exception.handler.RegionHandler;
-import umc.spring.converter.RegionConverter;
 import umc.spring.converter.UserConverter;
 import umc.spring.converter.UserFavFoodConverter;
 import umc.spring.domain.FoodCategory;
@@ -49,7 +48,8 @@ public class UserCommandServiceImpl implements UserCommandService{
 
         userFavFoodList.forEach(userFavFood -> {userFavFood.setUser(newUser);});
 
-        newUser.setRegion(region);
+        //user <-> region 양방향 매핑
+        region.addUser(newUser);
 
         return userRepository.save(newUser);
     }
