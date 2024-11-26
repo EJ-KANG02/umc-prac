@@ -23,6 +23,10 @@ public class Mission extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    protected void setStore(Store store) {
+        this.store = store;
+    }
+
     private String description;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)

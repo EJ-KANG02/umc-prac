@@ -33,9 +33,9 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
 
         //입력받은 store id와 일치하는 store 조회 (없으면 예외처리)
         Store store = storeRepository.findById(request.getStoreId())
-                .orElseThrow(() -> new RegionHandler(ErrorStatus.STORE_NOT_FOUND));
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
 
-        //입력받은 store ID 리스트와 일치하는 값 repository에서 추출 (없으면 예외처리)
+        //입력받은 review ID 리스트와 일치하는 값 repository에서 추출 (없으면 예외처리)
         List<Review> reviewList = request.getReviewIdList().stream()
                 .map(review -> {
                     return reviewRepository.findById(review).orElseThrow(() -> new ReviewHandler(ErrorStatus.REVIEW_NOT_FOUND));

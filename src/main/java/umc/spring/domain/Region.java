@@ -24,6 +24,11 @@ public class Region extends BaseEntity {
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private List<User> userList = new ArrayList<>();
 
+    public void addUser(User user) {
+        userList.add(user);
+        user.setRegion(this);
+    }
+
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private List<Store> storeList = new ArrayList<>();
 

@@ -43,6 +43,11 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Mission> missionList = new ArrayList<>();
 
+    public void addMission(Mission mission) {
+        missionList.add(mission);
+        mission.setStore(this); // Mission의 연관 관계도 함께 설정
+    }
+
     @Override
     public String toString() {
         return "Store{" +

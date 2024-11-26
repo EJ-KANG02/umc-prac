@@ -11,12 +11,15 @@ import java.util.List;
 public class StoreRequestDTO {
 
     @Getter
-    public static class AddStoreDto{
+    public static class AddStoreDTO{
 
         @NotNull
         Long regionId;
 
-        @ExistCategories
-        List<Long> storeIdList;
+        @NotBlank
+        String storeName;
+
+        @Size(min = 5, max = 12)
+        String  address;
     }
 }
