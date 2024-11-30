@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
-import umc.spring.service.MissionService.MissionCommandService;
 import umc.spring.service.StoreService.StoreCommandService;
 import umc.spring.validation.annotation.ExistStore;
 import umc.spring.validation.annotation.ExistUser;
@@ -18,7 +18,6 @@ import umc.spring.web.dto.*;
 @RequestMapping("/stores")
 public class StoreRestController {
     private final StoreCommandService storeCommandService;
-    private final MissionCommandService missionCommandService;
 
     @PostMapping("/save")
     public ApiResponse<StoreResponseDTO.AddStoreResultDTO> addStore(@RequestBody @Valid StoreRequestDTO.AddStoreDTO request){
@@ -35,8 +34,9 @@ public class StoreRestController {
     }
 
     @PostMapping("/{storeId}/save/missions")
-    public ApiResponse<MissionResponseDTO.AddMissionResultDTO> addMission(@RequestBody @Valid MissionRequestDTO.AddMissionDto request){
-        Store store = missionCommandService.addMission(request);
-        return ApiResponse.onSuccess(StoreConverter.toAddMissionResultDTO(store));
+    public ApiResponse<StoreResponseDTO.AddMissionResultDTO> addMission(@RequestBody @Valid StoreRequestDTO.AddMissionDTO request,
+                                                                          @ExistStore @PathVariable(name = "storeId") Long storeId){
+        Mission mission = storeCommandService.addMission(storeId, request);
+        return ApiResponse.onSuccess(StoreConverter.toAddMissionResultDTO(mission));
     }
 }

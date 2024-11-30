@@ -7,10 +7,8 @@ import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.apiPayload.exception.handler.RegionHandler;
 import umc.spring.apiPayload.exception.handler.StoreHandler;
 import umc.spring.converter.StoreConverter;
-import umc.spring.domain.Region;
-import umc.spring.domain.Review;
-import umc.spring.domain.Store;
-import umc.spring.domain.User;
+import umc.spring.domain.*;
+import umc.spring.repository.MissionRepository;
 import umc.spring.repository.RegionRepository;
 import umc.spring.repository.ReviewRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
@@ -25,6 +23,7 @@ public class StoreCommandServiceImpl implements StoreCommandService{
     private final RegionRepository regionRepository;
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     @Transactional
@@ -60,5 +59,19 @@ public class StoreCommandServiceImpl implements StoreCommandService{
         user.addReview(review);
 
         return reviewRepository.save(review);
+    }
+
+    @Override
+    public Mission addMission(Long storeId, StoreRequestDTO.AddMissionDTO request) {
+        Mission mission = StoreConverter.toMission(request);
+
+        //입력받은 스토어 ID와 일치하는 값 repository에서 추출 (없으면 예외처리)
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
+
+        //store <-> mission 양방향 매핑
+        store.addMission(mission);
+
+        return missionRepository.save(mission);
     }
 }

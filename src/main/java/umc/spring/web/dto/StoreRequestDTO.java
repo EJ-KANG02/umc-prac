@@ -32,4 +32,11 @@ public class StoreRequestDTO {
         @NotBlank
         String reviewContent;
     }
+
+    @Getter
+    public static class AddMissionDTO{
+
+        @NotBlank
+        String description;
+    }
 }
