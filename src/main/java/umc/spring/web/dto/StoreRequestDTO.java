@@ -22,4 +22,14 @@ public class StoreRequestDTO {
         @Size(min = 5, max = 12)
         String  address;
     }
+
+    @Getter
+    public static class AddReviewDTO{
+
+        @NotNull
+        Float score;
+
+        @NotBlank
+        String reviewContent;
+    }
 }

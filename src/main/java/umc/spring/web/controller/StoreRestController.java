@@ -2,16 +2,15 @@ package umc.spring.web.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Review;
 import umc.spring.domain.Store;
 import umc.spring.service.MissionService.MissionCommandService;
-import umc.spring.service.ReviewService.ReviewCommandService;
 import umc.spring.service.StoreService.StoreCommandService;
+import umc.spring.validation.annotation.ExistStore;
+import umc.spring.validation.annotation.ExistUser;
 import umc.spring.web.dto.*;
 
 @RestController
@@ -19,7 +18,6 @@ import umc.spring.web.dto.*;
 @RequestMapping("/stores")
 public class StoreRestController {
     private final StoreCommandService storeCommandService;
-    private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
 
     @PostMapping("/save")
@@ -29,9 +27,11 @@ public class StoreRestController {
     }
 
     @PostMapping("/{storeId}/save/reviews")
-    public ApiResponse<ReviewResponseDTO.AddReviewResultDTO> addReview(@RequestBody @Valid ReviewRequestDTO.AddReviewDto request){
-        Store store = reviewCommandService.addReview(request);
-        return ApiResponse.onSuccess(StoreConverter.toAddReviewResultDTO(store));
+    public ApiResponse<StoreResponseDTO.AddReviewResultDTO> addReview(@RequestBody @Valid StoreRequestDTO.AddReviewDTO request,
+                                                                      @ExistStore @PathVariable(name = "storeId") Long storeId,
+                                                                      @ExistUser @RequestParam(name = "userId") Long userId){
+        Review review = storeCommandService.addReview(storeId, userId, request);
+        return ApiResponse.onSuccess(StoreConverter.toAddReviewResultDTO(review));
     }
 
     @PostMapping("/{storeId}/save/missions")

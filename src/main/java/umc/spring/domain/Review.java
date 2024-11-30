@@ -27,6 +27,9 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    protected void setUser(User user) {
+        this.user = user;
+    }
 
     private String reviewContent;
 
