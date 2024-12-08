@@ -39,4 +39,9 @@ public class StoreRequestDTO {
         @NotBlank
         String description;
     }
+
+    @Getter
+    public static class ChallengeMissionDTO{
+
+    }
 }

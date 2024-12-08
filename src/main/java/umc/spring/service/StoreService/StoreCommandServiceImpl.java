@@ -8,11 +8,9 @@ import umc.spring.apiPayload.exception.handler.RegionHandler;
 import umc.spring.apiPayload.exception.handler.StoreHandler;
 import umc.spring.converter.StoreConverter;
 import umc.spring.domain.*;
-import umc.spring.repository.MissionRepository;
-import umc.spring.repository.RegionRepository;
-import umc.spring.repository.ReviewRepository;
+import umc.spring.domain.mapping.UserMission;
+import umc.spring.repository.*;
 import umc.spring.repository.StoreRepository.StoreRepository;
-import umc.spring.repository.UserRepository;
 import umc.spring.web.dto.StoreRequestDTO;
 
 @Service
@@ -24,6 +22,7 @@ public class StoreCommandServiceImpl implements StoreCommandService{
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final MissionRepository missionRepository;
+    private final UserMissionRepository userMissionRepository;
 
     @Override
     @Transactional
@@ -73,5 +72,27 @@ public class StoreCommandServiceImpl implements StoreCommandService{
         store.addMission(mission);
 
         return missionRepository.save(mission);
+    }
+
+    @Override
+    public UserMission addUserMission(StoreRequestDTO.ChallengeMissionDTO request, Long userId, Long missionId) {
+        UserMission userMission = StoreConverter.toUserMission(request);
+
+        //입력받은 유저 ID와 일치하는 값 repository에서 추출 (없으면 예외처리)
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.USER_NOT_FOUND));
+
+        //입력받은 미션 ID와 일치하는 값 repository에서 추출 (없으면 예외처리)
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
+
+
+        //store <-> mission 양방향 매핑
+        userMission.setUser(user);
+
+        //store <-> mission 양방향 매핑
+        userMission.setMission(mission);
+
+        return userMissionRepository.save(userMission);
     }
 }

@@ -8,6 +8,7 @@ import umc.spring.converter.StoreConverter;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.domain.mapping.UserMission;
 import umc.spring.service.StoreService.StoreCommandService;
 import umc.spring.validation.annotation.ExistStore;
 import umc.spring.validation.annotation.ExistUser;
@@ -38,5 +39,14 @@ public class StoreRestController {
                                                                           @ExistStore @PathVariable(name = "storeId") Long storeId){
         Mission mission = storeCommandService.addMission(storeId, request);
         return ApiResponse.onSuccess(StoreConverter.toAddMissionResultDTO(mission));
+    }
+
+    @PostMapping("/{storeId}/missions/{missionId}/challenge")
+    public ApiResponse<StoreResponseDTO.ChallengeMissionResultDTO> challengeMission(@RequestBody @Valid StoreRequestDTO.ChallengeMissionDTO request,
+                                                                                    @ExistStore @PathVariable(name = "storeId") Long storeId,
+                                                                                    @PathVariable(name = "missionId") Long missionId,
+                                                                                    @ExistUser @RequestParam(name = "userId") Long userId){
+        UserMission userMission = storeCommandService.addUserMission(request, userId, missionId);
+        return ApiResponse.onSuccess(StoreConverter.toChallengeMissionResultDTO(userMission));
     }
 }

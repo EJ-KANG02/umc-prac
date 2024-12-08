@@ -3,6 +3,7 @@ package umc.spring.converter;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.domain.mapping.UserMission;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
 
@@ -51,6 +52,19 @@ public class StoreConverter {
     public static StoreResponseDTO.AddMissionResultDTO toAddMissionResultDTO(Mission mission){
         return StoreResponseDTO.AddMissionResultDTO.builder()
                 .missionId(mission.getMissionId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static UserMission toUserMission(StoreRequestDTO.ChallengeMissionDTO request){
+
+        return UserMission.builder()
+                .build();
+    }
+
+    public static StoreResponseDTO.ChallengeMissionResultDTO toChallengeMissionResultDTO(UserMission userMission){
+        return StoreResponseDTO.ChallengeMissionResultDTO.builder()
+                .userMissionId(userMission.getUserMissionId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }

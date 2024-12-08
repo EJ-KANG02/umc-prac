@@ -34,4 +34,12 @@ public class UserMission extends BaseEntity {
         this.user = user;
         user.getUserMissionList().add(this);
     }
+
+    public void setMission(Mission mission){
+        if(this.mission != null){
+            mission.getUserMissionList().remove(this);
+        }
+        this.mission = mission;
+        mission.getUserMissionList().add(this);
+    }
 }
