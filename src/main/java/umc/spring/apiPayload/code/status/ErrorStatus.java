@@ -40,7 +40,10 @@ public enum ErrorStatus implements BaseErrorCode {
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW4001", "해당하는 리뷰가 없습니다."),
 
     //Mission 없음 에러
-    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4001", "해당하는 미션이 없습니다.");
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4001", "해당하는 미션이 없습니다."),
+
+    //Page number 없음 에러
+    INVALID_PAGE_NUMBER(HttpStatus.BAD_REQUEST, "PAGE4001", "올바르지 않은 페이징 번호입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
