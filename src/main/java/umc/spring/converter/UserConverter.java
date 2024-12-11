@@ -1,15 +1,18 @@
 package umc.spring.converter;
 
-import umc.spring.apiPayload.code.status.ErrorStatus;
-import umc.spring.apiPayload.exception.handler.RegionHandler;
-import umc.spring.domain.Region;
+
+import org.springframework.data.domain.Page;
+import umc.spring.domain.Review;
 import umc.spring.domain.User;
 import umc.spring.domain.enums.Gender;
+import umc.spring.web.dto.StoreResponseDTO;
 import umc.spring.web.dto.UserRequestDTO;
 import umc.spring.web.dto.UserResponseDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserConverter {
 
@@ -42,6 +45,29 @@ public class UserConverter {
                 .userFavFoodList(new ArrayList<>())
                 .reviewList(new ArrayList<>())
                 .userMissionList(new ArrayList<>())
+                .build();
+    }
+
+    public static UserResponseDTO.ReviewPreViewDTO toReviewPreViewDTO(Review review){
+        return UserResponseDTO.ReviewPreViewDTO.builder()
+                .ownerNickname(review.getUser().getUserName())
+                .score(review.getScore())
+                .createdAt(review.getCreatedAt().toLocalDate())
+                .reviewContent(review.getReviewContent())
+                .build();
+    }
+
+    public static UserResponseDTO.ReviewPreViewListDTO toReviewPreViewListDTO(Page<Review> reviewList){
+        List<UserResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()
+                .map(UserConverter::toReviewPreViewDTO).collect(Collectors.toList());
+
+        return UserResponseDTO.ReviewPreViewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())
+                .totalElements(reviewList.getTotalElements())
+                .listSize(reviewPreViewDTOList.size())
+                .reviewList(reviewPreViewDTOList)
                 .build();
     }
 }
