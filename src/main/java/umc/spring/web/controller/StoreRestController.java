@@ -21,6 +21,7 @@ import umc.spring.service.StoreService.StoreQueryService;
 import umc.spring.validation.annotation.CheckPage;
 import umc.spring.validation.annotation.ExistStore;
 import umc.spring.validation.annotation.ExistUser;
+import umc.spring.validation.validator.CheckPageValidator;
 import umc.spring.web.dto.*;
 
 @RestController
@@ -29,6 +30,7 @@ import umc.spring.web.dto.*;
 public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final StoreQueryService storeQueryService;
+    private final CheckPageValidator checkPageValidator;
 
     @PostMapping("/save")
     public ApiResponse<StoreResponseDTO.AddStoreResultDTO> addStore(@RequestBody @Valid StoreRequestDTO.AddStoreDTO request){
@@ -75,7 +77,8 @@ public class StoreRestController {
     public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewListByStoreId(
             @ExistStore @PathVariable(name = "storeId") Long storeId,
             @CheckPage @RequestParam(name = "page") Integer page){
-        Page<Review> reviewList = storeQueryService.getReviewListByStoreId(storeId,page);
+        Integer validatedPage = checkPageValidator.validateAndTransformPage(page);
+        Page<Review> reviewList = storeQueryService.getReviewListByStoreId(storeId,validatedPage);
         return ApiResponse.onSuccess(StoreConverter.toReviewPreViewListDTO(reviewList));
     }
 
@@ -94,7 +97,8 @@ public class StoreRestController {
     public ApiResponse<StoreResponseDTO.MissionPreViewListDTO> getMissionListByStoreId(
             @ExistStore @PathVariable(name = "storeId") Long storeId,
             @CheckPage @RequestParam(name = "page") Integer page){
-        Page<Mission> missionList = storeQueryService.getMissionListByStoreId(storeId, page);
+        Integer validatedPage = checkPageValidator.validateAndTransformPage(page);
+        Page<Mission> missionList = storeQueryService.getMissionListByStoreId(storeId, validatedPage);
         return ApiResponse.onSuccess(StoreConverter.toMissionPreViewListDTO(missionList));
     }
 
