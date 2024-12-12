@@ -30,7 +30,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public Page<Review> getReviewListByUserId(Long UserId, Integer page) {
         User user = userRepository.findById(UserId).get();
 
-        Page<Review> UserPage = reviewRepository.findAllByUser(user, PageRequest.of(page, 10));
-        return UserPage;
+        Page<Review> userPage = reviewRepository.findAllByUser(user, PageRequest.of(page, 10));
+        return userPage;
     }
 }
