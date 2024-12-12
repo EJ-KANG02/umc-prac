@@ -5,8 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.repository.MissionRepository;
 import umc.spring.repository.ReviewRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
 
@@ -20,6 +22,7 @@ public class StoreQueryServiceImpl implements StoreQueryService{
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -39,7 +42,15 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     public Page<Review> getReviewListByStoreId(Long StoreId, Integer page) {
         Store store = storeRepository.findById(StoreId).get();
 
-        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+        Page<Review> storePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return storePage;
+    }
+
+    @Override
+    public Page<Mission> getMissionListByStoreId(Long StoreId, Integer page) {
+        Store store = storeRepository.findById(StoreId).get();
+
+        Page<Mission> StorePage = missionRepository.findAllByStore(store, PageRequest.of(page, 10));
         return StorePage;
     }
 }
