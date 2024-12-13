@@ -68,4 +68,13 @@ public class UserResponseDTO {
         String description;
         LocalDate createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CompletedMissionResultDTO {
+        Long missionId;
+        LocalDate createdAt;
+    }
 }
