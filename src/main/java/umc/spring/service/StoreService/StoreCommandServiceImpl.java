@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.spring.apiPayload.code.status.ErrorStatus;
+import umc.spring.apiPayload.exception.handler.MissionHandler;
 import umc.spring.apiPayload.exception.handler.RegionHandler;
 import umc.spring.apiPayload.exception.handler.StoreHandler;
 import umc.spring.converter.StoreConverter;
@@ -84,7 +85,7 @@ public class StoreCommandServiceImpl implements StoreCommandService{
 
         //입력받은 미션 ID와 일치하는 값 repository에서 추출 (없으면 예외처리)
         Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
+                .orElseThrow(() -> new MissionHandler(ErrorStatus.MISSION_NOT_FOUND));
 
 
         //store <-> mission 양방향 매핑
