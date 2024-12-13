@@ -94,4 +94,11 @@ public class UserConverter {
                 .missionList(missionPreViewDTOList)
                 .build();
     }
+
+    public static UserResponseDTO.CompletedMissionResultDTO toCompletedMissionResultDTO(UserMission userMission){
+        return UserResponseDTO.CompletedMissionResultDTO.builder()
+                .missionId(userMission.getUserMissionId())
+                .createdAt(userMission.getCreatedAt().toLocalDate())
+                .build();
+    }
 }
