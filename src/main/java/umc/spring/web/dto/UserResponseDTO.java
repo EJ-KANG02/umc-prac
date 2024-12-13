@@ -45,4 +45,27 @@ public class UserResponseDTO {
         String reviewContent;
         LocalDate createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionPreViewListDTO {
+        List<UserResponseDTO.MissionPreViewDTO> missionList;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionPreViewDTO {
+        String storeName;
+        String description;
+        LocalDate createdAt;
+    }
 }
