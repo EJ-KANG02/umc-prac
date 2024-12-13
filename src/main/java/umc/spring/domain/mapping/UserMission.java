@@ -6,6 +6,7 @@ import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Mission;
 import umc.spring.domain.User;
 import umc.spring.domain.common.BaseEntity;
+import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.enums.Status;
 
 @Entity
@@ -26,6 +27,10 @@ public class UserMission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ONGOING'")
+    private MissionStatus status;
 
     public void setUser(User user){
         if(this.user != null){
