@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.UserMission;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
@@ -62,6 +63,7 @@ public class StoreConverter {
     public static UserMission toUserMission(StoreRequestDTO.ChallengeMissionDTO request){
 
         return UserMission.builder()
+                .status(MissionStatus.ONGOING)
                 .build();
     }
 
