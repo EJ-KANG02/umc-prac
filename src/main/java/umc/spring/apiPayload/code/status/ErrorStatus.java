@@ -43,7 +43,10 @@ public enum ErrorStatus implements BaseErrorCode {
     MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4001", "해당하는 미션이 없습니다."),
 
     //Page number 없음 에러
-    INVALID_PAGE_NUMBER(HttpStatus.BAD_REQUEST, "PAGE4001", "올바르지 않은 페이징 번호입니다.");
+    INVALID_PAGE_NUMBER(HttpStatus.BAD_REQUEST, "PAGE4001", "올바르지 않은 페이징 번호입니다."),
+
+    //User mission 없음 에러
+    USER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_MISSION4001", "해당하는 사용자 미션이 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
