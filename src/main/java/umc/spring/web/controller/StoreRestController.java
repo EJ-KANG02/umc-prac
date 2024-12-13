@@ -19,6 +19,7 @@ import umc.spring.domain.mapping.UserMission;
 import umc.spring.service.StoreService.StoreCommandService;
 import umc.spring.service.StoreService.StoreQueryService;
 import umc.spring.validation.annotation.CheckPage;
+import umc.spring.validation.annotation.ExistMission;
 import umc.spring.validation.annotation.ExistStore;
 import umc.spring.validation.annotation.ExistUser;
 import umc.spring.validation.validator.CheckPageValidator;
@@ -56,7 +57,7 @@ public class StoreRestController {
     @PostMapping("/{storeId}/missions/{missionId}/challenge")
     public ApiResponse<StoreResponseDTO.ChallengeMissionResultDTO> challengeMission(@RequestBody @Valid StoreRequestDTO.ChallengeMissionDTO request,
                                                                                     @ExistStore @PathVariable(name = "storeId") Long storeId,
-                                                                                    @PathVariable(name = "missionId") Long missionId,
+                                                                                    @ExistMission @PathVariable(name = "missionId") Long missionId,
                                                                                     @ExistUser @RequestParam(name = "userId") Long userId){
         UserMission userMission = storeCommandService.addUserMission(request, userId, missionId);
         return ApiResponse.onSuccess(StoreConverter.toChallengeMissionResultDTO(userMission));
