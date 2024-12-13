@@ -6,15 +6,18 @@ import org.springframework.stereotype.Service;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.apiPayload.exception.handler.FoodCategoryHandler;
 import umc.spring.apiPayload.exception.handler.RegionHandler;
+import umc.spring.apiPayload.exception.handler.StoreHandler;
+import umc.spring.apiPayload.exception.handler.UserMissionHandler;
 import umc.spring.converter.UserConverter;
 import umc.spring.converter.UserFavFoodConverter;
 import umc.spring.domain.FoodCategory;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Region;
 import umc.spring.domain.User;
+import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.UserFavFood;
-import umc.spring.repository.FoodCategoryRepository;
-import umc.spring.repository.RegionRepository;
-import umc.spring.repository.UserRepository;
+import umc.spring.domain.mapping.UserMission;
+import umc.spring.repository.*;
 import umc.spring.web.dto.UserRequestDTO;
 
 import java.util.List;
@@ -27,6 +30,8 @@ public class UserCommandServiceImpl implements UserCommandService{
     private final UserRepository userRepository;
     private final FoodCategoryRepository foodCategoryRepository;
     private final RegionRepository regionRepository;
+    private final UserMissionRepository userMissionRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     @Transactional
@@ -52,5 +57,20 @@ public class UserCommandServiceImpl implements UserCommandService{
         region.addUser(newUser);
 
         return userRepository.save(newUser);
+    }
+
+    @Override
+    @Transactional
+    public UserMission completeMission(Long userId, Long missionId) {
+        User user = userRepository.findById(userId).get();
+
+        Mission mission = missionRepository.findById(missionId).get();
+
+        UserMission userMission = userMissionRepository.findByUserAndMission(user,mission)
+                .orElseThrow(() -> new UserMissionHandler(ErrorStatus.USER_MISSION_NOT_FOUND));
+
+        userMission.setStatus(MissionStatus.COMPLETED);
+
+        return userMissionRepository.save(userMission);
     }
 }
