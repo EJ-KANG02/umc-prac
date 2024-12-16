@@ -29,24 +29,23 @@ public class UserConverter {
     public static User toUser(UserRequestDTO.JoinDto request){
 
         Gender gender = null;
-
-        switch (request.getGender()){
-            case 1:
-                gender = Gender.MALE;
-                break;
-            case 2:
-                gender = Gender.FEMALE;
-                break;
+        switch (request.getGender()) {
+            case 1: gender = Gender.MALE; break;
+            case 2: gender = Gender.FEMALE; break;
         }
 
         return User.builder()
                 .region(null) //id 예외 처리 후 대입
                 .userName(request.getUserName())
+                .email(request.getEmail())
+                .password(request.getPassword())
                 .gender(gender)
                 .address(request.getAddress())
                 .userFavFoodList(new ArrayList<>())
                 .reviewList(new ArrayList<>())
                 .userMissionList(new ArrayList<>())
+                .address(request.getAddress())
+                .role(request.getRole())
                 .build();
     }
 
