@@ -2,6 +2,7 @@ package umc.spring.service.UserService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.apiPayload.exception.handler.FoodCategoryHandler;
@@ -32,12 +33,15 @@ public class UserCommandServiceImpl implements UserCommandService{
     private final RegionRepository regionRepository;
     private final UserMissionRepository userMissionRepository;
     private final MissionRepository missionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public User joinUser(UserRequestDTO.JoinDto request) {
 
         User newUser = UserConverter.toUser(request);
+
+        newUser.encodePassword(passwordEncoder.encode(request.getPassword()));
 
         //입력받은 음식 카테고리 ID 리스트와 일치하는 값 repository에서 추출 (없으면 예외처리)
         List<FoodCategory> foodCategoryList = request.getUserFavFoodIdList().stream()
