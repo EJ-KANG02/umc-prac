@@ -31,13 +31,19 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final StringPath email = createString("email");
+
     public final EnumPath<umc.spring.domain.enums.Gender> gender = createEnum("gender", umc.spring.domain.enums.Gender.class);
+
+    public final StringPath password = createString("password");
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
 
     public final QRegion region;
 
     public final ListPath<Review, QReview> reviewList = this.<Review, QReview>createList("reviewList", Review.class, QReview.class, PathInits.DIRECT2);
+
+    public final EnumPath<umc.spring.domain.enums.Role> role = createEnum("role", umc.spring.domain.enums.Role.class);
 
     public final EnumPath<umc.spring.domain.enums.Status> status = createEnum("status", umc.spring.domain.enums.Status.class);
 
